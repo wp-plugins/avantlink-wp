@@ -167,7 +167,7 @@ function avantlink_test_product_search($content) {
 	if (function_exists('avantlink_display_product_search_results')) {
 		$strUrl = $_SERVER['HTTPS'] == 'on' ? 'https://' : 'http://' . $_SERVER['SERVER_NAME'];
 		$strUrl .= preg_replace('/[&?]ps=(.*)/', '', $_SERVER['REQUEST_URI']);
-		if (get_option('avantlink_search_url') == $strUrl) {
+		if (rtrim(trim(get_option('avantlink_search_url')), '/') == rtrim($strUrl, '/')) {
 			$content .= avantlink_display_product_search_results(true);
 		}
 	}
@@ -382,23 +382,20 @@ class Avantlink {
 
 	function Avantlink() {
 		global $wp_version;
-		// The current version
-		define('avantlink_VERSION', '1.0.0');
 
 		// Check for WP2.6 installation
-		if (!defined ('IS_WP26'))
+		if (!defined ('IS_WP26')) {
 			define('IS_WP26', version_compare($wp_version, '2.6', '>=') );
+		}
 
 		//This works only in WP2.6 or higher
 		if ( IS_WP26 == FALSE) {
-			add_action('admin_notices', create_function('', 'echo \'<div id="message" class="error fade"><p><strong>' . __('Sorry, avantlink works only under WordPress 2.6 or higher',"avantlinkHW") . '</strong></p></div>\';'));
+			add_action('admin_notices', create_function('', 'echo \'<div id="message" class="error fade"><p><strong>' . __('Sorry, the AvantLink WP plugin works only under WordPress 2.6 or higher',"avantlinkHW") . '</strong></p></div>\';'));
 			return;
 		}
 
 		// define URL
-		define('avantlink_ABSPATH', WP_PLUGIN_DIR.'/'.plugin_basename( dirname(__FILE__) ).'/' );
 		define('avantlink_URLPATH', WP_PLUGIN_URL.'/'.plugin_basename( dirname(__FILE__) ).'/' );
-		//define('avantlink_TAXONOMY', 'wt_tag');
 
 		include_once (dirname (__FILE__)."/lib/shortcodes.php");
 		include_once (dirname (__FILE__)."/tinymce/tinymce.php");

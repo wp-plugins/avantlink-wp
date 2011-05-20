@@ -26,29 +26,42 @@ function avantlink_display_related_products() {
 	if($results != '') { $num_results = $results; } else { $num_results = $d_results; }
 	if($d_title == '') { $title = "Related Products"; } else { $title = $d_title; }
 	if($all_posts != 1 && $keyword == '') { $disabled = true; }
+	$query = '';
 
 	// format negative keywords for request
-	$nsearch_terms = explode(",", $nsearch_term);
-
-	for($i = 0; $i < count($nsearch_terms); $i++) {
-		$nsearch_term = str_replace(" "," -",$nsearch_terms[$i]);
-		$query .= "-".$nsearch_term." ";
+	$nsearch_query = '';
+	$nsearch_terms = explode(',', $nsearch_term);
+	$intSearchTermCount = count($nsearch_terms);
+	for ($i = 0; $i < $intSearchTermCount; $i++) {
+		if (trim($nsearch_terms[$i]) != '') {
+			$nsearch_term = str_replace(' ', ' -', trim($nsearch_terms[$i]));
+			$nsearch_query .= '-' . $nsearch_term . ' ';
+		}
 	}
+	$nsearch_query = trim($nsearch_query);
 
 	// format keyword for request
-	$search_terms = explode(",", $search_term);
-	for($i = 0; $i < count($search_terms); $i++) {
-		$search_term = str_replace(" ","+",$search_terms[$i]);
-		if ($i == 0) {
-			$query .= $search_term;
+	$search_terms = explode(',', $search_term);
+	$intSearchTermCount = count($search_terms);
+	for($i = 0; $i < $intSearchTermCount; $i++) {
+		if (trim($search_terms[$i]) != '') {
+			$search_term = str_replace(' ', '+', $search_terms[$i]);
+			if ($query == '') {
+				$query = $search_term;
+			}
+			else { $query .= '|' . $search_term; }
+
+			// If any were specified, append negative keywords to each keyword set
+			if ($nsearch_query != '') {
+				$query .= ' ' . $nsearch_query;
+			}
 		}
-		else { $query .= " | ".$search_term; }
 	}
 
 	if($disabled == false) {
 		$output = '';
 
-		$arrProducts = avantlink_api_get_product_search( $affiliate_id, $website_id, $search_term, null, null, '1', 'nofollow' );
+		$arrProducts = avantlink_api_get_product_search( $affiliate_id, $website_id, $query, null, null, '1', 'nofollow' );
 		$intProductCount = count($arrProducts);
 		if ($intProductCount == 0) {
 			$output = '<p>No related products found</p>';
