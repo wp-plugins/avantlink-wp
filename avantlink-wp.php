@@ -117,7 +117,13 @@ if ($avantlink_is_enabled) {
 
 	// hook for product search form, only display if plugin is configured to do so
 	if (get_option('avantlink_search_url') != '') {
-		add_filter('the_content', 'avantlink_test_product_search');
+		if (function_exists('avantlink_display_product_search_results')) {
+			if (avantlink_is_product_search_page()) {
+				add_filter('the_content', 'avantlink_do_product_search');
+				add_filter('the_title','avantlink_add_product_search_term_page_title');
+				add_filter('wp_title','avantlink_add_product_search_term_site_title');
+			}
+		}
 	}
 
 }
@@ -161,17 +167,53 @@ function avantlink_add_ale() {
 }
 
 /**
- * Filter function to decide whether or not to show product search results
+ * Test function to see if we're on the product search results page
  */
-function avantlink_test_product_search($content) {
-	if (function_exists('avantlink_display_product_search_results')) {
-		$strUrl = $_SERVER['HTTPS'] == 'on' ? 'https://' : 'http://' . $_SERVER['SERVER_NAME'];
-		$strUrl .= preg_replace('/[&?]ps=(.*)/', '', $_SERVER['REQUEST_URI']);
-		if (rtrim(trim(get_option('avantlink_search_url')), '/') == rtrim($strUrl, '/')) {
-			$content .= avantlink_display_product_search_results(true);
-		}
+function avantlink_is_product_search_page() {
+	$strUrl = $_SERVER['HTTPS'] == 'on' ? 'https://' : 'http://' . $_SERVER['SERVER_NAME'];
+	$strUrl .= preg_replace('/[&?]ps=(.*)/', '', $_SERVER['REQUEST_URI']);
+	if (rtrim(trim(get_option('avantlink_search_url')), '/') == rtrim($strUrl, '/')) {
+		return true;
 	}
+	return false;
+}
+
+/**
+ * Filter to show product search results
+ */
+function avantlink_do_product_search($content) {
+	$content .= avantlink_display_product_search_results(true);
 	return $content;
+}
+
+/**
+ * Filter to add the product search term to the page title
+ */
+function avantlink_add_product_search_term_page_title($strTitle) {
+	$display_search_term_opt_name = 'avantlink_search_display_term';
+	$display_search_term_opt_val = get_option ($display_search_term_opt_name);
+	if ($display_search_term_opt_val !== '1' && $strTitle == 'Search Results' && isset($_GET['ps']) && trim($_GET['ps']) != '') {
+		$strChangeTitle = $strTitle . " for " . "'" . htmlspecialchars(strip_tags($_GET['ps'])) . "'";
+		return $strChangeTitle;
+	}
+	else {
+		return $strTitle;
+	}
+}
+
+/**
+ * Filter to add the product search term to the <title> element
+ */
+function avantlink_add_product_search_term_site_title($strTitle) {
+	$display_search_term_opt_name = 'avantlink_search_display_term';
+	$display_search_term_opt_val = get_option ($display_search_term_opt_name);
+	if ($display_search_term_opt_val !== '1' && isset($_GET['ps']) && trim($_GET['ps']) != '') {
+		$strChangeTitle = "Search '" . htmlspecialchars(strip_tags($_GET['ps'])) . "' | ";
+		return $strChangeTitle;
+	}
+	else {
+		return $strTitle;
+	}
 }
 
 // register the custom plugin

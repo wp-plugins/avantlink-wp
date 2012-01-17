@@ -98,5 +98,14 @@ END;
 			echo $strOutput;
 		}
 	}
+	else {
+		$strOutput = 'No search term specified.';
+		if ($return) {
+			return $strOutput;
+		}
+		else {
+			echo $strOutput;
+		}
+	}
 }
 ?>

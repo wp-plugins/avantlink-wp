@@ -24,6 +24,9 @@ function avantlink_settings_page() {
 	$deactivate_ALE_opt_name = 'avantlink_ale_deactivate';
     $deactivate_ALE_data_field_name = 'avantlink_ale_deactivate';
 
+    $display_search_term_opt_name = 'avantlink_search_display_term';
+    $display_search_term_field_name = 'avantlink_search_display_term';
+
 	$ale_subscription_id_opt_name = 'avantlink_ale_id';
     $ale_subscription_id_data_field_name = 'avantlink_ale_id';
 
@@ -55,6 +58,7 @@ function avantlink_settings_page() {
     $auth_key_opt_val = get_option( $auth_key_opt_name );
 	$website_id_opt_val = get_option( $website_id_opt_name );
 	$deactivate_ALE_opt_val = get_option( $deactivate_ALE_opt_name );
+	$display_search_term_opt_val = get_option( $display_search_term_opt_name );
 	$ale_subscription_id_opt_val = get_option( $ale_subscription_id_opt_name );
 	$search_url_opt_val = get_option( $search_url_opt_name );
 	$search_results_count_opt_val = get_option( $search_results_count_opt_name );
@@ -151,6 +155,7 @@ function avantlink_settings_page() {
 			// read their posted value
 			$search_url_opt_val = $_POST[ $search_url_data_field_name ];
 			$search_results_count_opt_val = $_POST[ $search_results_count_data_field_name ];
+			$display_search_term_opt_val = $_POST[ $display_search_term_field_name ];
 
 	        if (get_magic_quotes_gpc()) {
 				$search_url_opt_val = stripslashes($search_url_opt_val);
@@ -159,6 +164,7 @@ function avantlink_settings_page() {
 	        // save the posted value in the database
 			update_option( $search_url_opt_name, $search_url_opt_val );
 			update_option( $search_results_count_opt_name, $search_results_count_opt_val );
+			update_option( $display_search_term_opt_name, $display_search_term_opt_val );
 
 	        // put an settings updated message on the screen
 			echo '<div class="updated"><p><strong>Settings Saved</strong></p></div>';
@@ -277,6 +283,7 @@ function avantlink_settings_page() {
 	<td>
 		<input type="checkbox" id="' . $deactivate_ALE_data_field_name . '" name="' . $deactivate_ALE_data_field_name . '" value="1"' . ($deactivate_ALE_opt_val == 1 ? ' checked="checked"' : '') . ' />
 		(The Affiliate Link Encoder is enabled by default with activation of this plugin.)
+
 	</td>
 </tr>
 <tr valign="top">
@@ -387,6 +394,14 @@ function avantlink_settings_page() {
 	' . (version_compare($wp_version, '3.0.0', '<') ? 'create a blank page' : '<a href="post-new.php?post_type=page">create a blank page</a>') . '
 	titled "Search Results" and paste the url of the newly created page in the "Search Page URL" field below.</small></strong>
 	</th>
+</tr>
+<tr valign="top">
+	<th scope="row"><label for="' . $display_search_term_field_name . '">Do not display search terms?</label></th>
+	<td>
+		<input type="checkbox" id="' . $display_search_term_field_name . '" name="' . $display_search_term_field_name . '" value="1"' . ($display_search_term_opt_val == 1 ? ' checked="checked"' : '') . ' />
+		(Display of search terms enabled by default. Search terms are displayed in title of search.)
+
+	</td>
 </tr>
 <tr valign="top">
 	<th scope="row"><label for="' . $search_url_data_field_name . '">Search Page URL:</label></th>
