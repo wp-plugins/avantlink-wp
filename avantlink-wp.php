@@ -3,7 +3,7 @@
 Plugin Name: AvantLink WP
 Plugin URI: http://www.avantlink.com/affiliates/affiliate-tool-center/
 Description: AvantLink affiliate plugin for WordPress.  Features include easy-to-use integration with Ad Campaign, Affiliate Link Encoder, Custom Link, Product Ad Widget, and Product Search API tools.  Requires active affiliate account with AvantLink.
-Version: 1.0.3
+Version: 1.0.5
 Author: AvantLink.com
 Author URI: http://www.avantlink.com/
 License: GPLv2
