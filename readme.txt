@@ -2,8 +2,8 @@
 Contributors: avantlink
 Tags: avantlink, affiliate, widget, plugin, post, link, encoder, related, product, search, keyword, query
 Requires at least: 2.8
-Tested up to: 3.3.1
-Stable tag: 1.0.5
+Tested up to: 3.8
+Stable tag: 1.0.6
 
 The AvantLink WP plugin allows quick and simple integration with a variety of affiliate marketing tools from the AvantLink.com network.
 
@@ -29,6 +29,9 @@ Once activated, affiliates can quickly and easily use the following tools:
 == Frequently Asked Questions ==
 
 == Changelog ==
+
+= 1.0.6 =
+* Tested to WordPress version 3.8
 
 = 1.0.5 =
 * Versioning correction
