@@ -55,7 +55,7 @@ class AvantLink_PAW_Widget extends WP_Widget {
 			// of the widget is configured to display
 
 			// See if we're on a post that has a specific PAW defined
-			if (is_single()) {
+			if (is_single()|is_page()) {
 				$paw_url = trim(get_post_meta($id, '_avantlink_paw_url', true));
 			}
 		}

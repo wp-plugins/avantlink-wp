@@ -41,7 +41,7 @@ class AvantLink_RP_Widget extends WP_Widget {
 		$id = $post->ID;
 
 		// only display on single pages
-		if (is_single()) {
+		if (is_single()|is_page()) {
 
 			/* Before widget (defined by themes). */
 			echo $before_widget;
