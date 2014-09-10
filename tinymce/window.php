@@ -130,7 +130,7 @@ background : #eee;
 				tinyMCEPopup.close();
 		}
 
-// New tinyMCE code 9-10-2014
+// New tinyMCE code 9-10-2014 revision 2
 	if(window.tinyMCE) {
 
     /* get the TinyMCE version to account for API diffs */
