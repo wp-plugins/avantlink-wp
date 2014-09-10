@@ -130,19 +130,26 @@ background : #eee;
 				tinyMCEPopup.close();
 		}
 
-		if(window.tinyMCE) {
-			window.tinyMCE.execInstanceCommand('content', 'mceInsertContent', false, tagtext);
-			//Peforms a clean up of the current editor HTML.
-			//tinyMCEPopup.editor.execCommand('mceCleanup');
-			//Repaints the editor. Sometimes the browser has graphic glitches.
-			tinyMCEPopup.editor.execCommand('mceRepaint');
-			tinyMCEPopup.close();
-		}
+// New tinyMCE code 9-10-2014
+	if(window.tinyMCE) {
 
-		return;
-	}
+    /* get the TinyMCE version to account for API diffs */
+    var tmce_ver=window.tinyMCE.majorVersion;
 
-	// Function for editor link - value for link text needs to get encoded
+    if (tmce_ver>="4") {
+        window.tinyMCE.execCommand('mceInsertContent', false, tagtext);
+    } else {
+        window.tinyMCE.execInstanceCommand('content', 'mceInsertContent', false, tagtext);
+    }
+
+    tinyMCEPopup.editor.execCommand('mceRepaint');
+    tinyMCEPopup.close();
+    }
+    return;
+}
+// End tinyMCE code
+
+// Function for editor link - value for link text needs to get encoded
 
 	function insertCustomLink() {
 
