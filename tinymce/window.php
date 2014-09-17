@@ -129,8 +129,8 @@ background : #eee;
 			else
 				tinyMCEPopup.close();
 		}
-
-// New tinyMCE code 9-10-2014 revision 2
+ 
+// New tinyMCE code 9-10-2014
 	if(window.tinyMCE) {
 
     /* get the TinyMCE version to account for API diffs */
