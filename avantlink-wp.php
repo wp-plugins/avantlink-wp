@@ -3,7 +3,7 @@
 Plugin Name: AvantLink WP
 Plugin URI: http://www.avantlink.com/affiliates/affiliate-tool-center/
 Description: AvantLink affiliate plugin for WordPress.  Features include easy-to-use integration with Ad Campaign, Affiliate Link Encoder, Custom Link, Product Ad Widget, and Product Search API tools.  Requires active affiliate account with AvantLink.
-Version: 1.0.8.1
+Version: 1.0.9
 Author: AvantLink.com
 Author URI: http://www.avantlink.com/
 License: GPLv2
@@ -151,14 +151,14 @@ function avantlink_add_ale() {
 	if ($deactivate_ALE != 1) {
 		$ale_subscription_id = intval(get_option('avantlink_ale_id'));
 		if ($ale_subscription_id > 0) {
-			$strSubscriptionUrl = 'http://www.avantlink.com/ale/ale.php?ti=' . $ale_subscription_id;
+			$strSubscriptionUrl = 'https://www.avantlink.com/ale/ale.php?ti=' . $ale_subscription_id;
 		}
 		else {
 			$affiliate_id = intval(get_option('avantlink_affiliate_id'));
 			$website_id = intval(get_option('avantlink_website_id'));
 
 			// Use default/pseudo subscription
-			$strSubscriptionUrl = 'http://www.avantlink.com/ale/ale.php?p=' . $affiliate_id . '&pw=' . $website_id;
+			$strSubscriptionUrl = 'https://www.avantlink.com/ale/ale.php?p=' . $affiliate_id . '&pw=' . $website_id;
 		}
 
 		wp_enqueue_script('avantlink-ale', $strSubscriptionUrl, null, null, true);
@@ -208,7 +208,7 @@ function avantlink_add_product_search_term_site_title($strTitle) {
 	$display_search_term_opt_name = 'avantlink_search_display_term';
 	$display_search_term_opt_val = get_option ($display_search_term_opt_name);
 	if ($display_search_term_opt_val !== '1' && isset($_GET['ps']) && trim($_GET['ps']) != '') {
-		$strChangeTitle = "Search '" . htmlspecialchars(strip_tags($_GET['ps'])) . "' | ";
+		$strChangeTitle = "Search '" . htmlspecialchars(strip_tags($_GET['ps'])) . "' | " . get_bloginfo( 'name' );
 		return $strChangeTitle;
 	}
 	else {
@@ -380,7 +380,7 @@ function avantlink_api_get_subscriptions($affiliate_id, $auth_key, $subscription
  */
 function avantlink_api_get_ad_campaigns($affiliate_id, $website_id, $merchant_id, $ad_type)
 {
-	$strUrl = 'http://www.avantlink.com/api.php?module=AdSearch&output=tab&affiliate_id=' . $affiliate_id . '&website_id=' . $website_id;
+	$strUrl = 'https://www.avantlink.com/api.php?module=AdSearch&output=tab&affiliate_id=' . $affiliate_id . '&website_id=' . $website_id;
 	$strUrl .= '&merchant_id=' . urlencode($merchant_id);
 	$strUrl .= '&ad_type=' . urlencode($ad_type);
 	$strUrl .= '&integration_type=dynamic';
@@ -397,7 +397,7 @@ function avantlink_api_get_ad_campaigns($affiliate_id, $website_id, $merchant_id
  */
 function avantlink_api_get_product_search($affiliate_id, $website_id, $search_term, $search_result_count = null, $sort_order = null, $adv_syntax = null, $result_options = null)
 {
-	$strUrl = 'http://www.avantlink.com/api.php?module=ProductSearch&output=tab&affiliate_id=' . $affiliate_id . '&website_id=' . $website_id;
+	$strUrl = 'https://www.avantlink.com/api.php?module=ProductSearch&output=tab&affiliate_id=' . $affiliate_id . '&website_id=' . $website_id;
 	$strUrl .= '&search_term=' . urlencode($search_term);
 	if (isset($search_result_count) && $search_result_count != null) {
 		$strUrl .= '&search_results_count=' . intval($search_result_count);
