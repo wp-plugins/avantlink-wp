@@ -55,8 +55,8 @@
             return {
                 longname : 'AvantLink Editor Button',
                 author : 'Scott Wood',
-                authorurl : 'http://http://www.avantlink.com',
-                infourl : 'http://http://www.avantlink.com',
+                authorurl : 'http://www.avantlink.com',
+                infourl : 'http://www.avantlink.com',
                 version : "1.0"
             };
         },
