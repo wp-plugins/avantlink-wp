@@ -29,6 +29,9 @@ Once activated, affiliates can quickly and easily use the following tools:
 == Frequently Asked Questions ==
 
 == Changelog ==
+= 1.0.9 =
+* Updated cURL links to use HTTPS, fixed bug with site <title> in Product Search Results page
+
 = 1.0.8.1  =
 * Small change needed to latest update 1.0.8 on window.php
 
